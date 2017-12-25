@@ -1,0 +1,32 @@
+{extend name="main/index" /}
+
+{block name="main"}
+<link href="/static/reset.css" rel="stylesheet">
+<h1>角色管理</h1><br>
+<h4>角色列表</h4>
+<hr>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>角色</th>
+        <th>说明</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    {volist name="list" id="v"}
+    <tr>
+        <td>{$v.id}</td>
+        <td>{$v.name}</td>
+        <td>{$v.remark}</td>
+        <td>{$v.status}</td>
+
+        <td>
+            <a href="{:url('admin/role/edit',['id' => $v['id']])}" class="btn btn-success btn-default btn-sm1">修改</button>
+                <a href="{:url('admin/role/del',['id' => $v['id']])}" class="btn btn-danger btn-default btn-sm1">删除</a>
+                <button type="button" class="btn btn-warning btn-default btn-sm1">分配角色</button>
+        </td>
+    </tr>
+    {/volist}
+</table>
+
+{/block}

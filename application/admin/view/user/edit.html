@@ -1,0 +1,22 @@
+{extend name="main/index" /}
+
+{block name="main"}
+<link href="/static/reset.css" rel="stylesheet">
+<h1>用户管理</h1><br>
+<h4>用户修改</h4>
+<hr>
+<form action="{:url('admin/user/update',['id' => $data['id']])}" method="post">
+    <input type="hidden" name="_method" value="PUT" >
+    <div class="form-group col-sm-5">
+        <label for="exampleInputEmail1">用户名:</label>
+        <input type="text" class="form-control" name="username" id="exampleInputEmail1"  value="{$data['username']}">
+    </div>
+    <div class="form-group col-sm-5" style="clear:both">
+        <label for="exampleInputPassword1">真实姓名:</label>
+        <input type="text" class="form-control" name="name" id="exampleInputPassword1" value="{$data['name']}">
+    </div>
+    <div class="form-group col-sm-5" style="clear:both">
+        <button type="submit" class="btn btn-success" >提交</button>
+    </div>
+</form>
+{/block}
