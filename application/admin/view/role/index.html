@@ -11,6 +11,7 @@
         <th>角色</th>
         <th>说明</th>
         <th>状态</th>
+        <th>拥有的权限</th>
         <th>操作</th>
     </tr>
     {volist name="list" id="v"}
@@ -19,14 +20,14 @@
         <td>{$v.name}</td>
         <td>{$v.remark}</td>
         <td>{$v.status}</td>
-
+        <td></td>
         <td>
             <a href="{:url('admin/role/edit',['id' => $v['id']])}" class="btn btn-success btn-default btn-sm1">修改</button>
                 <a href="{:url('admin/role/del',['id' => $v['id']])}" class="btn btn-danger btn-default btn-sm1">删除</a>
-                <button type="button" class="btn btn-warning btn-default btn-sm1">分配角色</button>
+                <a href="{:url('admin/role/nodelist',['id' => $v['id']])}" class="btn btn-warning btn-default btn-sm1">分配权限</a>
         </td>
     </tr>
     {/volist}
-</table>
+</table>a
 
 {/block}

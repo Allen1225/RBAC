@@ -14,11 +14,29 @@ class user extends Controller
      */
     public function index()
     {
-        $list= Db::name('user')->select();
-        // var_dump($result);
+        $list = Db::name('user')->select();
+        foreach($list as $v){
+            $role_ids = Db::name('user_role')->field('rid')
+                ->where(array('uid'=>array('eq',$v['id'])))
+                ->select();
+            // var_dump($role_ids);
+            // die;
+            $roles = array();
+            // var_dump($role_ids);
+            foreach ($role_ids as $value) {
+                $roles[] = Db::name('role')
+                    ->where(array('id'=>array('eq',$value['rid'])))
+                    ->value('name');
+            }
+            // var_dump($roles);
+            $v['role'] = $roles;
+            $arr[] = $v;
+        }
+        // var_dump($arr);
         return view('user/index',[
-            'list' => $list
+            'arr' => $arr
         ]);
+
     }
 
     /**
@@ -40,11 +58,7 @@ class user extends Controller
     public function save(Request $request)
     {
        $p =  $request->post();
-        // $data = [
-        //     'username' => $p['username'],
-        //     'name' => $p['name'],
-        //     'userpass' => $p['userpass']
-        // ];
+
         $result = Db::name('user')->insert($p);
         if ($result > 0)
         {
@@ -117,6 +131,52 @@ class user extends Controller
             return $this->success('删除成功',url('admin/user/index'));
         }else{
             return $this->error('删除失败',url('admin/user/index'));
+        }
+    }
+
+    /**
+     * noderole 分配角色
+     */
+    public function noderole($id)
+    {
+        $user = Db::name('user')->find($id);
+
+        $role = Db::name('role')->select();
+        $user_role = Db::name('user_role')->where('uid',$id)->select();
+        $myrole = array();
+        foreach($user_role as $v){
+            $myrole[] =$v['rid'];
+        }
+        // var_dump($myrole);die;
+        return view('user/noderole', [
+            'user' => $user,
+            'user_role' => $myrole,
+            'role' => $role
+        ]);
+    }
+
+    public function getrole(Request $request)
+    {
+        if(empty($_POST['role'])){
+            $this->error("请选择一个角色！");
+        }
+        $p = $request->post();
+        $uid = $p['uid'];
+
+        Db::name('user_role')->where('uid','=',$uid)->delete();
+
+        foreach($p['role'] as $v){
+            $data['uid'] = $uid;
+            $data['rid'] = $v;
+            //执行添加
+            $result = Db::name('user_role')->insert($data);
+        }
+        // var_dump($data);die;
+        if ($result > 0)
+        {
+            return $this->success('角色分配成功',url('admin/user/index'));
+        }else{
+            return $this->error('角色分配失败',url('admin/user/index'));
         }
     }
 }

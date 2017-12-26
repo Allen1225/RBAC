@@ -10,19 +10,27 @@
         <th>ID</th>
         <th>用户名</th>
         <th>真实姓名</th>
+        <th>所属角色</th>
         <th>操作</th>
     </tr>
-    {volist name="list" id="v"}
+    {volist name="arr" id="v"}
+
     <tr>
         <td>{$v.id}</td>
         <td>{$v.username}</td>
         <td>{$v.name}</td>
         <td>
+            {volist name="v.role" id="vo"}
+                {$vo}
+            {/volist}
+        </td>
+        <td>
             <a href="{:url('admin/user/edit',['id' => $v['id']])}" class="btn btn-success btn-default btn-sm1">修改</button>
             <a href="{:url('admin/user/del',['id' => $v['id']])}" class="btn btn-danger btn-default btn-sm1">删除</a>
-            <button type="button" class="btn btn-warning btn-default btn-sm1">分配角色</button>
+            <a href="{:url('admin/user/noderole',['id' => $v['id']])}" class="btn btn-warning btn-default btn-sm1">分配角色</a>
         </td>
     </tr>
+
     {/volist}
 </table>
 

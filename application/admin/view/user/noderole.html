@@ -1,0 +1,23 @@
+{extend name="main/index" /}
+
+{block name="main"}
+    <h1>用户管理</h1><br>
+    <h4>分配权限</h4>
+    <hr>
+
+<h4>给<strong><u>{$user.username}</u></strong>分配权限</h4>
+
+
+    <form action="{:url('admin/user/getrole')}" method="post">
+            {volist name="role" id="v"}
+            <input type="checkbox" name="role[]" id="inlineCheckbox1" value="{$v.id}" {if condition="in_array($v['id'],$user_role) == true"} checked
+                   {/if} >{$v.name}
+            {/volist}
+        <div style="clear:both"></div>
+        <br>
+
+        <input type="hidden" name="uid" value="{$user.id}">
+        <button type="submit" class="btn btn-success">保存</button>
+    </form>
+
+{/block}

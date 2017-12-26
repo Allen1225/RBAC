@@ -120,4 +120,12 @@ class Role extends Controller
             return $this->error('删除失败',url('admin/role/index'));
         }
     }
+
+    /**
+     * 分配权限
+     */
+    public function nodelist()
+    {
+
+    }
 }
