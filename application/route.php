@@ -12,9 +12,15 @@
 use think\Route;
 
 Route::get('/', 'index/Index/index');
+<<<<<<< HEAD
 
 // Route::resource('users', 'rest/user');
 // Route::get('users/read/:id', 'rest/user/readpage');
+=======
+Route::get('/user/del','admin/user/del');
+Route::resource('user', 'admin/User');
+Route::get('users/read/:id', 'rest/User/readpage');
+>>>>>>> 8aa8129c464630872995f1daeb3f6430c7bedb79
 
 
 return [

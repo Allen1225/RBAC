@@ -88,9 +88,15 @@ class Process
         135 => 'Bus error: "access to undefined portion of memory object"',
         136 => 'Floating point exception: "erroneous arithmetic operation"',
         137 => 'Kill (terminate immediately)',
+<<<<<<< HEAD
         138 => 'user-defined 1',
         139 => 'Segmentation violation',
         140 => 'user-defined 2',
+=======
+        138 => 'User-defined 1',
+        139 => 'Segmentation violation',
+        140 => 'User-defined 2',
+>>>>>>> 8aa8129c464630872995f1daeb3f6430c7bedb79
         141 => 'Write to pipe with no one reading',
         142 => 'Signal raised by alarm',
         143 => 'Termination (request to terminate)',

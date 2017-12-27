@@ -18,7 +18,11 @@ return [
         '__file__'   => ['common.php'],
         '__dir__'    => ['behavior', 'controller', 'model', 'view'],
         'controller' => ['Index', 'Test', 'UserType'],
+<<<<<<< HEAD
         'model'      => ['user', 'UserType'],
+=======
+        'model'      => ['User', 'UserType'],
+>>>>>>> 8aa8129c464630872995f1daeb3f6430c7bedb79
         'view'       => ['index/index'],
     ],
     // 其他更多的模块定义

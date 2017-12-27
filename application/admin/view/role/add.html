@@ -1,4 +1,5 @@
 {extend name="main/index" /}
+<<<<<<< HEAD
 {block name="main"}
 
 <div class="content-page">
@@ -66,4 +67,31 @@
 
 
 
+=======
+
+{block name="main"}
+<link href="/static/reset.css" rel="stylesheet">
+<h1>角色管理</h1><br>
+<h4>角色添加</h4>
+<hr>
+<form action="{:url('admin/role/save')}" method="post">
+
+    <div class="form-group col-sm-5">
+        <label for="exampleInputEmail1">角色:</label>
+        <input type="text" class="form-control" name="name" id="exampleInputEmail1" placeholder="角色">
+    </div>
+    <div class="form-group col-sm-5" style="clear:both">
+        <label for="exampleInputPassword1">说明:</label>
+        <input type="text" class="form-control" name="remark" id="exampleInputPassword1" placeholder="说明">
+    </div>
+    <div class="form-group col-sm-5" style="clear:both">
+        <label for="exampleInputPassword1">状态</label>
+        <input type="text" class="form-control" name="status" id="exampleInputPassword1" placeholder="状态">
+    </div>
+
+    <div class="form-group col-sm-5" style="clear:both">
+        <button type="submit" class="btn btn-success" >提交</button>
+    </div>
+</form>
+>>>>>>> 8aa8129c464630872995f1daeb3f6430c7bedb79
 {/block}

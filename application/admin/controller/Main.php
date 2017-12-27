@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+<<<<<<< HEAD
 use think\Db;
 use think\Request;
 use think\Session;
@@ -84,6 +85,26 @@ class Main extends controller
     public function logout()
     {
         Session::delete('userData');
+=======
+use think\Controller;
+
+class Main extends Controller
+{
+    /**
+     * 后台登录处理
+     * @return \think\response\View
+     */
+    public function logindo()
+    {
+        return $this->fetch('admin@Main/index');
+    }
+    /**
+     * 后台登出处理
+     * @return \think\response\View
+     */
+    public function logout()
+    {
+>>>>>>> 8aa8129c464630872995f1daeb3f6430c7bedb79
         return $this->redirect('admin/index/index');
     }
 
