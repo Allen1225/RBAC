@@ -7,7 +7,8 @@ class Index
 
     public function index()
     {
-        return view('admin@index/login');
+        return view('index/login');
     }
+
 
 }

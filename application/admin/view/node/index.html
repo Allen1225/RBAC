@@ -14,12 +14,12 @@
             <div class="col-md-12">
                 <div class="widget">
                     <div class="widget-header transparent">
-                        <h2><strong>Sortable</strong> Table</h2>
-                        <div class="additional-btn">
-                            <a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>
-                            <a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>
-                            <a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>
-                        </div>
+
+                        <!--<div class="additional-btn">-->
+                            <!--<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>-->
+                            <!--<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>-->
+                            <!--<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>-->
+                        <!--</div>-->
                     </div>
                     <div class="widget-content">
                         <div class="table-responsive">
@@ -40,7 +40,7 @@
                                     <td>{$v.mname}</td>
                                     <td>{$v.status}</td>
                                     <td>
-                                        <a href="{:url('admin/node/edit', ['id'=>$v['id']])}" class="btn btn-primary">修改</a>
+                                        <a href="{:url('admin/node/edit', ['id'=>$v['id']])}" class="btn btn-warning">修改</a>
                                         <a href="{:url('admin/node/delete', ['id'=>$v['id']])}" class="btn btn-danger">删除</a>
                                     </td>
                                     </tr>

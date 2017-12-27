@@ -1,0 +1,48 @@
+{extend name="main/index" /}
+{block name="main"}
+
+<div class="content-page">
+
+    <div class="content">
+
+        <div class="page-heading">
+            <h1><i class='fa fa-table'></i>角色管理</h1>
+            <h3>分配权限</h3></div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <h4 >给&nbsp;<strong>{$user.name}</strong>&nbsp;分配权限</h4>
+
+                <form class="form-horizontal"  action="{:url('admin/user/roleupdate')}" method="post" >
+                    {volist name='list' key='key' id='val' }
+                        <label class="checkbox-inline" >
+                            <input type="checkbox"  name="role[]" value="{$val.id}"  {if condition="in_array($val.id,$myrole) eq true"}checked{/if} >&nbsp;{$val.name}
+                        </label>
+                    {/volist}
+                    <input type="hidden" name="uid" value="{$user.id}">
+
+                    <div class="form-group" style="margin-bottom:60px;">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">添加</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+{/block}

@@ -2,12 +2,13 @@
 
 namespace app\admin\controller;
 
-use think\Controller;
+
 use think\Request;
 use think\Db;
 
 
-class Node extends Controller
+
+class Node extends AdminController
 {
     public function index()
     {
@@ -37,11 +38,11 @@ class Node extends Controller
             'status' => $p['status']
 
         ];
-        $result = Db::name('node')->data($data)->insert();
+        $result = Db::name('node')->insert($data);
         if ($result) {
-            return $this->success('添加成功(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 飞天了！', url('admin/node/index'));
+            return $this->success('添加成功', url('admin/node/index'));
         }else{
-            return $this->error('添加失败(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 坠机了！', url('admin/node/add'));
+            return $this->error('添加失败', url('admin/node/add'));
 
         }
 
@@ -54,9 +55,9 @@ class Node extends Controller
         $result = Db::name('node')->delete($id);
 
         if ($result>0) {
-            return $this->success('删除成功(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 飞天了！', url('admin/node/index'));
+            return $this->success('删除成功', url('admin/node/index'));
         }else{
-            return $this->error('删除失败(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 坠机了！', url('admin/node/index'));
+            return $this->error('删除失败', url('admin/node/index'));
 
         }
     }
@@ -84,9 +85,9 @@ class Node extends Controller
         ];
         $result = Db::name('node')->where('id',$id)->update($data);
         if ($result) {
-            return $this->success('修改成功(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 飞天了！', url('admin/node/index'));
+            return $this->success('修改成功', url('admin/node/index'));
         }else{
-            return $this->error('修改失败(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 坠机了！', url('admin/node/add'));
+            return $this->error('修改失败', url('admin/node/add'));
 
         }
 

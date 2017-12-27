@@ -2,18 +2,36 @@
 
 namespace app\admin\controller;
 
-use think\Controller;
+
 use think\Request;
 use think\Db;
+use think\Session;
 
-class User extends Controller
+class User extends AdminController
 {
 
     public function index()
     {
+
+
         $list = Db::name('user')->select();
+        foreach($list as $v){
+            $role_ids = Db::name('user_role')->field('rid')
+                ->where(array('uid'=>array('eq',$v['id'])))
+                ->select();
+            $roles = array();
+            foreach ($role_ids as $value) {
+                $roles[] = Db::name('role')
+                    ->where(array('id'=>array('eq',$value['rid'])))
+                    ->value('name');
+            }
+            $v['role'] = $roles;
+            $arr[] = $v;
+        }
+        // var_dump($arr);
+        // exit;
         return view('user/index',[
-            'list'=> $list
+            'list'=> $arr
         ]);
     }
 
@@ -49,9 +67,9 @@ class User extends Controller
         ];
         $result = Db::name('user')->data($data)->insert();
         if ($result) {
-            return $this->success('添加成功(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 飞天了！', url('admin/user/index'));
+            return $this->success('添加成功', url('admin/user/index'));
         }else{
-            return $this->error('添加失败(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 坠机了！', url('admin/user/add'));
+            return $this->error('添加失败', url('admin/user/add'));
 
         }
 
@@ -64,9 +82,9 @@ class User extends Controller
         $result = Db::name('user')->delete($id);
 
         if ($result>0) {
-            return $this->success('删除成功(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 飞天了！', url('admin/user/index'));
+            return $this->success('删除成功', url('admin/user/index'));
         }else{
-            return $this->error('删除失败(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 坠机了！', url('admin/user/index'));
+            return $this->error('删除失败', url('admin/user/index'));
 
         }
     }
@@ -92,12 +110,64 @@ class User extends Controller
         ];
         $result = Db::name('user')->where('id',$id)->update($data);
         if ($result) {
-            return $this->success('修改成功(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 飞天了！', url('admin/user/index'));
+            return $this->success('修改成功', url('admin/user/index'));
         }else{
-            return $this->error('修改失败(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 坠机了！', url('admin/user/index'));
+            return $this->error('修改失败', url('admin/user/index'));
 
         }
 
+    }
+
+    public function rolelist($id)
+    {
+
+        //当前用户信息
+        $user = Db::name('user')->where('id',$id)->find();
+
+        //获取角色信息
+        $list = Db::name('role')->select();
+
+        //获取 当前用户角色信息
+        $rolelist = Db::name('user_role')->where('uid',$id)->select();
+        // var_dump($rolelist);
+        // exit;
+        $myrole = array();
+        foreach ($rolelist as $v) {
+            $myrole[] = $v['rid'];
+        }
+        // var_dump($myrole);
+        // exit;
+
+
+        return view('user/rolelist',[
+            'user' => $user ,
+            'list' => $list,
+            'myrole' => $myrole
+
+        ]);
 
     }
+
+    public function roleupdate(Request $request)
+    {
+        $p = $request->post();
+        $uid = $p['uid'];
+        //消除用户角色信息
+        Db::name('user_role')->where(array('uid'=>array('eq',$uid)))->delete();
+        foreach($p['role'] as $val){
+            $data['uid'] = $uid;
+            $data['rid'] = $val;
+
+            $add = Db::name('user_role')->data($data)->insert();
+
+        }
+
+        if ($add) {
+            return $this->success('修改角色成功', url('admin/user/index'));
+        }else{
+            return $this->error('修改角色失败', url('admin/user/index'));
+
+        }
+    }
+
 }
