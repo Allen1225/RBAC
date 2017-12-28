@@ -619,7 +619,7 @@ Licensed under the MIT license.
         },
         plot = this;
 
-        // public functions
+        // publics functions
         plot.setData = setData;
         plot.setupGrid = setupGrid;
         plot.draw = draw;
@@ -682,7 +682,7 @@ Licensed under the MIT license.
             overlay.resize(width, height);
         };
 
-        // public attributes
+        // publics attributes
         plot.hooks = hooks;
 
         // initialize
@@ -976,7 +976,7 @@ Licensed under the MIT license.
             }
 
             // If any of the series have fixed color indexes, then we need to
-            // generate at least as many colors as the highest index.
+            // generate at least as many colors as the highest Index.
 
             if (neededColors <= maxIndex) {
                 neededColors = maxIndex + 1;

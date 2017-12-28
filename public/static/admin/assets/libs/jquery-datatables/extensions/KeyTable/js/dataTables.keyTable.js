@@ -40,15 +40,15 @@ KeyTable = function ( oInit )
 	/*
 	 * Variable: block
 	 * Purpose:  Flag whether or not KeyTable events should be processed
-	 * Scope:    KeyTable - public
+	 * Scope:    KeyTable - publics
 	 */
 	this.block = false;
 
 	/*
 	 * Variable: event
 	 * Purpose:  Container for all event application methods
-	 * Scope:    KeyTable - public
-	 * Notes:    This object contains all the public methods for adding and removing events - these
+	 * Scope:    KeyTable - publics
+	 * Notes:    This object contains all the publics methods for adding and removing events - these
 	 *           are dynamically added later on
 	 */
 	this.event = {
@@ -1005,7 +1005,7 @@ KeyTable = function ( oInit )
 	 *   string:focusClass - focusing class to give to table elements
 	 *           object:that - focus
 	 *   bool:initScroll - scroll the view port on load, default true
-	 *   int:tabIndex - the tab index to give the hidden input element
+	 *   int:tabIndex - the tab Index to give the hidden input element
 	 */
 	function _fnInit( table, datatable, oInit, that )
 	{

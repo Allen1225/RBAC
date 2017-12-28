@@ -194,7 +194,7 @@ var bootstrapWizardCreate = function(element, options) {
 	obj.fixNavigationButtons();
 
 	$('a[data-toggle="tab"]', $navigation).on('click', function (e) {
-		// Get the index of the clicked tab
+		// Get the Index of the clicked tab
 		var clickedIndex = $navigation.find(baseItemSelector).index($(e.currentTarget).parent(baseItemSelector));
 		if($settings.onTabClick && typeof $settings.onTabClick === 'function' && $settings.onTabClick($activeTab, $navigation, obj.currentIndex(), clickedIndex)===false){
 			return false;

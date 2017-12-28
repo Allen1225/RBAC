@@ -27,20 +27,19 @@ class Node extends AdminController
 
     public function save (Request $request)
     {
-
         $p = $request->post();
         // var_dump($p);
         //处理数据
         $data = [
             'name' => $p['name'],
             'mname' => $p['mname'],
-            'aname' => $p['aname'],
-            'status' => $p['status']
+            'aname' => $p['aname']
+            // 'status' => $p['status']
 
         ];
         $result = Db::name('node')->insert($data);
         if ($result) {
-            return $this->success('添加成功', url('admin/node/index'));
+            return $this->success('添加成功', url('admin/node/Index'));
         }else{
             return $this->error('添加失败', url('admin/node/add'));
 
@@ -55,9 +54,9 @@ class Node extends AdminController
         $result = Db::name('node')->delete($id);
 
         if ($result>0) {
-            return $this->success('删除成功', url('admin/node/index'));
+            return $this->success('删除成功', url('admin/node/Index'));
         }else{
-            return $this->error('删除失败', url('admin/node/index'));
+            return $this->error('删除失败', url('admin/node/Index'));
 
         }
     }
@@ -79,13 +78,13 @@ class Node extends AdminController
         $data = [
             'name' => $p['name'],
             'mname' => $p['mname'],
-            'aname' => $p['aname'],
-            'status' => $p['status']
+            'aname' => $p['aname']
+            // 'status' => $p['status']
 
         ];
         $result = Db::name('node')->where('id',$id)->update($data);
         if ($result) {
-            return $this->success('修改成功', url('admin/node/index'));
+            return $this->success('修改成功', url('admin/node/Index'));
         }else{
             return $this->error('修改失败', url('admin/node/add'));
 

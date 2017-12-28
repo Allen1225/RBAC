@@ -250,7 +250,7 @@ function Calendar(element, options, eventSources) {
 			initialRender();
 		}
 		else if (elementVisible()) {
-			// mainly for the public API
+			// mainly for the publics API
 			calcSize();
 			_renderView(inc);
 		}
@@ -2226,7 +2226,7 @@ function BasicView(element, calendar, viewName) {
 	
 	function buildEventContainer() {
 		daySegmentContainer =
-			$("<div class='fc-event-container' style='position:absolute;z-index:8;top:0;left:0'/>")
+			$("<div class='fc-event-container' style='position:absolute;z-Index:8;top:0;left:0'/>")
 				.appendTo(element);
 	}
 	
@@ -2941,13 +2941,13 @@ function AgendaView(element, calendar, viewName) {
 		buildDayTable();
 		
 		slotLayer =
-			$("<div style='position:absolute;z-index:2;left:0;width:100%'/>")
+			$("<div style='position:absolute;z-Index:2;left:0;width:100%'/>")
 				.appendTo(element);
 				
 		if (opt('allDaySlot')) {
 		
 			daySegmentContainer =
-				$("<div class='fc-event-container' style='position:absolute;z-index:8;top:0;left:0'/>")
+				$("<div class='fc-event-container' style='position:absolute;z-Index:8;top:0;left:0'/>")
 					.appendTo(slotLayer);
 		
 			s =
@@ -2986,7 +2986,7 @@ function AgendaView(element, calendar, viewName) {
 				.appendTo(slotScroller);
 				
 		slotSegmentContainer =
-			$("<div class='fc-event-container' style='position:absolute;z-index:8;top:0;left:0'/>")
+			$("<div class='fc-event-container' style='position:absolute;z-Index:8;top:0;left:0'/>")
 				.appendTo(slotContainer);
 		
 		s =
@@ -4334,7 +4334,7 @@ function AgendaEventRenderer() {
 
 
 // Sets the seg.backwardCoord and seg.forwardCoord on each segment and returns a new
-// list in the order they should be placed into the DOM (an implicit z-index).
+// list in the order they should be placed into the DOM (an implicit z-Index).
 function placeSlotSegs(segs) {
 	var levels = buildSlotSegLevels(segs);
 	var level0 = levels[0];
@@ -4848,7 +4848,7 @@ function View(element, calendar, viewName) {
 
 	// internals
 	var hiddenDays = opt('hiddenDays') || []; // array of day-of-week indices that are hidden
-	var isHiddenDayHash = []; // is the day-of-week hidden? (hash with day-of-week-index -> bool)
+	var isHiddenDayHash = []; // is the day-of-week hidden? (hash with day-of-week-Index -> bool)
 	var cellsPerWeek;
 	var dayToCellMap = []; // hash from dayIndex -> cellIndex, for one week
 	var cellToDayMap = []; // hash from cellIndex -> dayIndex, for one week
@@ -4882,7 +4882,7 @@ function View(element, calendar, viewName) {
 
 
 	// Is the current day hidden?
-	// `day` is a day-of-week index (0-6), or a Date object
+	// `day` is a day-of-week Index (0-6), or a Date object
 	function isHiddenDay(day) {
 		if (typeof day == 'object') {
 			day = day.getDay();
@@ -5084,7 +5084,7 @@ function DayEventRenderer() {
 	
 	// exports
 	t.renderDayEvents = renderDayEvents;
-	t.draggableDayEvent = draggableDayEvent; // made public so that subclasses can override
+	t.draggableDayEvent = draggableDayEvent; // made publics so that subclasses can override
 	t.resizableDayEvent = resizableDayEvent; // "
 	
 	
@@ -5576,7 +5576,7 @@ function DayEventRenderer() {
 					break;
 				}
 			}
-			// `j` now holds the desired subrow index
+			// `j` now holds the desired subrow Index
 			if (subrows[j]) {
 				subrows[j].push(segment);
 			}
@@ -5948,7 +5948,7 @@ function OverlayManager() {
 	function renderOverlay(rect, parent) {
 		var e = unusedOverlays.shift();
 		if (!e) {
-			e = $("<div class='fc-cell-overlay' style='position:absolute;z-index:3'/>");
+			e = $("<div class='fc-cell-overlay' style='position:absolute;z-Index:3'/>");
 		}
 		if (e[0].parentNode != parent[0]) {
 			e.appendTo(parent);

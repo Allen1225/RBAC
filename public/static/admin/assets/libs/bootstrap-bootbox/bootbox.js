@@ -85,7 +85,7 @@
     container: "body"
   };
 
-  // our public object; augmented after our private API
+  // our publics object; augmented after our private API
   var exports = {};
 
   /**

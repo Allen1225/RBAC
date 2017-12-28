@@ -30,6 +30,7 @@ class User extends AdminController
         }
         // var_dump($arr);
         // exit;
+
         return view('user/index',[
             'list'=> $arr
         ]);
@@ -67,7 +68,7 @@ class User extends AdminController
         ];
         $result = Db::name('user')->data($data)->insert();
         if ($result) {
-            return $this->success('添加成功', url('admin/user/index'));
+            return $this->success('添加成功', url('admin/user/Index'));
         }else{
             return $this->error('添加失败', url('admin/user/add'));
 
@@ -78,14 +79,24 @@ class User extends AdminController
 
     public function delete($id)
     {
-        // var_dump($id);
-        $result = Db::name('user')->delete($id);
-
-        if ($result>0) {
-            return $this->success('删除成功', url('admin/user/index'));
+        // var_dump($id);die;
+        $uid = Db::name('user_role')->where('uid','=',$id)->select();
+        // var_dump($uid);die;
+        foreach($uid as $v)
+        {
+            $uids = $v['uid'];
+        }
+        if(!(empty($uids))){
+            Db::name('user_role')->where('uid','=',$uids)->delete();
         }else{
-            return $this->error('删除失败', url('admin/user/index'));
+            $result = Db::name('user')->delete($id);
 
+            if ($result>0) {
+                return $this->success('删除成功', url('admin/user/Index'));
+            }else{
+                return $this->error('删除失败', url('admin/user/Index'));
+
+            }
         }
     }
     public function edit ($id)
@@ -110,9 +121,9 @@ class User extends AdminController
         ];
         $result = Db::name('user')->where('id',$id)->update($data);
         if ($result) {
-            return $this->success('修改成功', url('admin/user/index'));
+            return $this->success('修改成功', url('admin/user/Index'));
         }else{
-            return $this->error('修改失败', url('admin/user/index'));
+            return $this->error('修改失败', url('admin/user/Index'));
 
         }
 
@@ -163,9 +174,9 @@ class User extends AdminController
         }
 
         if ($add) {
-            return $this->success('修改角色成功', url('admin/user/index'));
+            return $this->success('修改角色成功', url('admin/user/Index'));
         }else{
-            return $this->error('修改角色失败', url('admin/user/index'));
+            return $this->error('修改角色失败', url('admin/user/Index'));
 
         }
     }

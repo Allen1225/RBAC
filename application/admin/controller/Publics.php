@@ -2,18 +2,32 @@
 
 namespace app\admin\controller;
 
-use think\Db;
-use think\Request;
-use think\Session;
 use think\Controller;
-
-class Main extends controller
+use think\Request;
+use think\Db;
+use think\Session;
+use think\Controller\redirect;
+class Publics extends Controller
 {
-
-
-    public function logindo(Request $request)
+    /**
+     * 显示资源列表
+     *
+     * @return \think\Response
+     */
+    public function login()
     {
 
+        return view('publics/login');
+    }
+    //执行登录
+    public function dologin(Request $request)
+    {
+        $data = $request->post();
+
+        if(!captcha_check($data['yzm'])){
+            // echo '123';die;
+            return  $this->error('验证码不正确',url('admin/publics/login'));
+        }
 
         $p = $request->post();
         $username = $p['username'];
@@ -23,14 +37,14 @@ class Main extends controller
 
         if(empty($data))
         {
-            return $this->error('用户名不存在', url('admin/index/index'));
+            return $this->error('用户名不存在', url('admin/publics/login'));
             exit;
 
         }
 
         if($data['userpass'] != md5($userpass))
         {
-            return $this->error('密码不正确', url('admin/index/index'));
+            return $this->error('密码不正确', url('admin/publics/login'));
             exit;
         }
 
@@ -39,11 +53,11 @@ class Main extends controller
 
         $list = Db::name('node')->field('mname,aname')
             ->where('id in'.Db::name('role_node')->field('nid')
-            ->where("rid in ".Db::name('user_role')->field('rid')
-            ->where(array('uid'=>array('eq',$data['id'])))
-            ->buildSql())
-            ->buildSql())
-            ->select();
+                    ->where("rid in ".Db::name('user_role')->field('rid')
+                    ->where(array('uid'=>array('eq',$data['id'])))
+                    ->buildSql())
+                    ->buildSql())
+                    ->select();
 
         foreach ($list as $key => $val) {
             $list[$key]['mname'] = ucfirst($val['mname']);
@@ -51,7 +65,7 @@ class Main extends controller
 
         $nodelist = array();
         $nodelist['Index'] = array('index');
-        // var_dump($nodelist);
+        // var_dump($nodelist);die;
         // var_dump($list);
         // die;var_dump($nodelist);
         // var_dump($list);
@@ -73,18 +87,18 @@ class Main extends controller
         // var_dump(Session::get('userData'));
         // die;
 
-        return $this->success('登录成功', url('admin/main/index'));
+        // return $this->success('登录成功', url('admin/Main/Index'));
 
-
+        $this->redirect('Index/index');
     }
 
-
-
-
+    /**
+     * 登出系统
+     */
     public function logout()
     {
         Session::delete('userData');
-        return $this->redirect('admin/index/index');
+        return view('Publics/login');
     }
 
     /**
@@ -93,7 +107,7 @@ class Main extends controller
      */
     public function index()
     {
-        return view('admin@main/index');
+        return view('admin@Index/Index');
     }
 
 }

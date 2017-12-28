@@ -27,7 +27,7 @@ class Role extends AdminController
         }
         // var_dump($arr);
         // exit;
-        return view('role/index',[
+        return view('role/Index',[
             'list'=> $arr
         ]);
     }
@@ -41,18 +41,18 @@ class Role extends AdminController
     {
         // var_dump($_POST);
         $p = $request->post();
-        // var_dump($p);
+        // var_dump($p);die;
         //处理数据
 
         $data = [
             'name' => $p['name'],
-            'status' => $p['status'],
+            // 'status' => $p['status'],
             'remark' => $p['remark']
 
         ];
         $result = Db::name('role')->data($data)->insert();
         if ($result) {
-            return $this->success('添加成功', url('admin/role/index'));
+            return $this->success('添加成功', url('admin/role/Index'));
         }else{
             return $this->error('添加失败', url('admin/role/add'));
 
@@ -67,13 +67,29 @@ class Role extends AdminController
     public function delete($id)
     {
         // var_dump($id);
-        $result = Db::name('role')->delete($id);
+         $rid = Db::name('role_node')->where('rid','=',$id)->select();
+        foreach($rid as $v)
+        {
+            $rids = $v['rid'];
+        }
 
-        if ($result>0) {
-            return $this->success('删除成功', url('admin/role/index'));
+        if(!(empty($rids))){
+            Db::name('role_node')->where('rid','=',$rids)->delete();
+            $result = Db::name('role')->delete($id);
+
+            if ($result>0) {
+                return $this->success('删除成功', url('admin/role/Index'));
+            }else{
+                return $this->error('删除失败', url('admin/role/Index'));
+            }
         }else{
-            return $this->error('删除失败', url('admin/role/index'));
+            $result = Db::name('role')->delete($id);
 
+            if ($result>0) {
+                return $this->success('删除成功', url('admin/role/Index'));
+            }else{
+                return $this->error('删除失败', url('admin/role/Index'));
+            }
         }
     }
     public function edit ($id)
@@ -89,9 +105,7 @@ class Role extends AdminController
     {
 
         $p = $request->post();
-        // var_dump($p);
-        //处理数据
-        // exit;
+        // var_dump($p);die;
         $data = [
             'name' => $p['name'],
             'status' => $p['status'],
@@ -100,7 +114,7 @@ class Role extends AdminController
         ];
         $result = Db::name('role')->where('id',$id)->update($data);
         if ($result) {
-            return $this->success('修改成功', url('admin/role/index'));
+            return $this->success('修改成功', url('admin/role/Index'));
         }else{
             return $this->error('修改失败', url('admin/role/add'));
 
@@ -155,9 +169,9 @@ class Role extends AdminController
         }
 
         if ($add) {
-            return $this->success('修改权限成功', url('admin/user/index'));
+            return $this->success('修改权限成功', url('admin/user/Index'));
         }else{
-            return $this->error('修改权限失败', url('admin/user/index'));
+            return $this->error('修改权限失败', url('admin/user/Index'));
 
         }
     }

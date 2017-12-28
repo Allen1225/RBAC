@@ -174,7 +174,7 @@ ResponsiveDatatablesHelper.prototype.init = function (breakpoints) {
             var splitBreakingPoints = dataHide.split(/,\s*/);
             _.each(splitBreakingPoints, function (e) {
                 if (this.breakpoints[e] !== undefined) {
-                    // Translate visible column index to internal column index.
+                    // Translate visible column Index to internal column Index.
                     this.breakpoints[e].columnsToHide.push(this.columnIndexes[index]);
                 }
             }, this);
@@ -294,7 +294,7 @@ ResponsiveDatatablesHelper.prototype.createExpandIcon = function (tr) {
         return;
     }
 
-    // Get the td for tr with the same index as the th in the header tr
+    // Get the td for tr with the same Index as the th in the header tr
     // that has the data-class="expand" attribute defined.
     var tds = $('td', tr);
     if (this.expandColumn !== undefined && this.expandColumn < tds.length) {

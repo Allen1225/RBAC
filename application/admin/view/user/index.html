@@ -1,8 +1,9 @@
-{extend name="main/index" /}
+{extend name="Index/index" /}
 {block name="main"}
 <!-- Start right content -->
 
 <!---->
+
 <div class="content-page">
 
     <div class="content">
@@ -32,7 +33,8 @@
                                     <th>用户名</th>
                                     <th>真实名</th>
                                     <th>所属角色</th>
-                                    {volist name='list' id='v'}
+                                    <th>操作</th>
+                                    {volist name="list" id="v"}
                                     <tr>
                                         <td>{$v.id}</td>
                                         <td>{$v.username}</td>
@@ -45,8 +47,8 @@
                                         </td>
                                         <td>
                                             <a href="{:url('admin/user/edit',['id'=>$v['id']])}" class="btn btn-warning ">修改</a>
-                                            <a href="{:url('admin/user/delete',['id'=>$v['id']])}" class="btn btn-danger">删除</a>
-                                            <a href="{:url('admin/user/rolelist',['id'=>$v['id']])}" class="btn btn-success">分配角色</a>
+                                            <a href="{:url('admin/user/delete',['id'=>$v['id']])}" class="btn btn-danger" >删除</a>
+                                            <a href="{:url('admin/user/rolelist',['id'=>$v['id']])}" class="btn btn-success" data-dismiss="modal">分配角色</a>
                                         </td>
                                     </tr>
                                     {/volist}

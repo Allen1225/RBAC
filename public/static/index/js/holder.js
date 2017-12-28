@@ -1694,7 +1694,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @param {String} str
 	 * @return {Object}
-	 * @api public
+	 * @api publics
 	 */
 
 	exports.parse = function(str){
@@ -1753,7 +1753,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @param {Object} obj
 	 * @return {String}
-	 * @api public
+	 * @api publics
 	 */
 
 	exports.stringify = function(obj){
@@ -1812,7 +1812,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @param {Mixed} val
 	 * @return {String}
-	 * @api public
+	 * @api publics
 	 */
 
 	module.exports = function(val){
@@ -2888,7 +2888,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			array[0] = HTMLString
 		}
 
-		// Return root element on index 0
+		// Return root element on Index 0
 		returnObject[0] = array[0]
 
 		if (callback)
@@ -2922,7 +2922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * Module exports.
-	 * @public
+	 * @publics
 	 */
 
 	module.exports = escapeHtml;
@@ -2932,7 +2932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @param  {string} string The string to escape for inserting into HTML
 	 * @return {string}
-	 * @public
+	 * @publics
 	 */
 
 	function escapeHtml(string) {

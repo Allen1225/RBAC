@@ -1,4 +1,4 @@
-{extend name="main/index" /}
+{extend name="index/index" /}
 {block name="main"}
 
 <div class="content-page">
@@ -35,17 +35,17 @@
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
                                         <div class="checkbox">
-                                            <label>
-                                                <input type="radio" name="status" value="1" {if condition="$data.status eq '1'"}checked{/if} >启用
-                                                &nbsp;&nbsp;&nbsp;
-                                                <input type="radio" name="status" value="0" {if condition="$data.status eq '0'"}checked{/if}>禁用
-                                            </label>
+                                            <!--<label>-->
+                                                <!--<input type="radio" name="status" value="1" {if condition="$data.status eq '1'"}checked{/if} >启用-->
+                                                <!--&nbsp;&nbsp;&nbsp;-->
+                                                <!--<input type="radio" name="status" value="0" {if condition="$data.status eq '0'"}checked{/if}>禁用-->
+                                            <!--</label>-->
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group" style="margin-bottom:60px;">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-default">修改</button>
+                                        <button type="submit" class="btn btn-success">修改</button>
                                     </div>
                                 </div>
                             </form>
@@ -54,16 +54,11 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
     </div>
-
-
 </div>
+<script>
 
+</script>
 
 
 {/block}

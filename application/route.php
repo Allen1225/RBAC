@@ -11,7 +11,7 @@
 
 use think\Route;
 
-Route::get('/', 'index/Index/index');
+Route::get('/', 'Index/Index/Index');
 
 // Route::resource('users', 'rest/user');
 // Route::get('users/read/:id', 'rest/user/readpage');

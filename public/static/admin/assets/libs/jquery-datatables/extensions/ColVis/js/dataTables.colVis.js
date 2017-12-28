@@ -232,7 +232,7 @@ ColVis.prototype = {
 
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private methods (they are of course public in JS, but recommended as private)
+	 * Private methods (they are of course publics in JS, but recommended as private)
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	/**
@@ -604,7 +604,7 @@ ColVis.prototype = {
 				}
 
 				/* Need to consider the case where the initialiser created more than one table - change the
-				 * API index that DataTables is using
+				 * API Index that DataTables is using
 				 */
 				var oldIndex = $.fn.dataTableExt.iApiIndex;
 				$.fn.dataTableExt.iApiIndex = that._fnDataTablesApiIndex.call(that);
@@ -966,7 +966,7 @@ ColVis.defaults = {
 
 	/**
 	 * Label callback for column names. Takes three parameters: 1. the
-	 * column index, 2. the column title detected by DataTables and 3. the
+	 * column Index, 2. the column title detected by DataTables and 3. the
 	 * TH node for the column
 	 *  @property fnLabel
 	 *  @type     function

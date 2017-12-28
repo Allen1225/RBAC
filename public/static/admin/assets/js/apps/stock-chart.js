@@ -166,7 +166,7 @@ function buildQuery() {
     var getDateString = d3.time.format("%Y-%m-%d");
     var query = base.format(symbol, getDateString(start), getDateString(end));
     query = encodeURIComponent(query);
-    var url = "http://query.yahooapis.com/v1/public/yql?q={0}&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys".format(query);
+    var url = "http://query.yahooapis.com/v1/publics/yql?q={0}&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys".format(query);
     return url;
 }
 

@@ -20,7 +20,7 @@ module.exports = Emitter;
 /**
  * Initialize a new `Emitter`.
  *
- * @api public
+ * @api publics
  */
 
 function Emitter(obj) {
@@ -48,7 +48,7 @@ function mixin(obj) {
  * @param {String} event
  * @param {Function} fn
  * @return {Emitter}
- * @api public
+ * @api publics
  */
 
 Emitter.prototype.on =
@@ -66,7 +66,7 @@ Emitter.prototype.addEventListener = function(event, fn){
  * @param {String} event
  * @param {Function} fn
  * @return {Emitter}
- * @api public
+ * @api publics
  */
 
 Emitter.prototype.once = function(event, fn){
@@ -90,7 +90,7 @@ Emitter.prototype.once = function(event, fn){
  * @param {String} event
  * @param {Function} fn
  * @return {Emitter}
- * @api public
+ * @api publics
  */
 
 Emitter.prototype.off =
@@ -155,7 +155,7 @@ Emitter.prototype.emit = function(event){
  *
  * @param {String} event
  * @return {Array}
- * @api public
+ * @api publics
  */
 
 Emitter.prototype.listeners = function(event){
@@ -168,7 +168,7 @@ Emitter.prototype.listeners = function(event){
  *
  * @param {String} event
  * @return {Boolean}
- * @api public
+ * @api publics
  */
 
 Emitter.prototype.hasListeners = function(event){
