@@ -1,113 +1,64 @@
-<?php
+{extend name="index/index" /}
+{block name="main"}
 
-namespace app\admin\controller;
+<div class="content-page">
 
-use think\Controller;
-use think\Request;
-use think\Db;
-use think\Session;
-use think\Controller\redirect;
-class Publics extends Controller
-{
-    /**
-     * 显示资源列表
-     *
-     * @return \think\Response
-     */
-    public function login()
-    {
+    <div class="content">
 
-        return view('publics/login');
-    }
-    //执行登录
-    public function dologin(Request $request)
-    {
-        $data = $request->post();
+        <div class="page-heading">
+            <h1><i class='fa fa-table'></i>角色管理</h1>
+            <h3>角色修改</h3></div>
 
-        if(!captcha_check($data['yzm'])){
-            // echo '123';die;
-            return  $this->error('验证码不正确',url('admin/publics/login'));
-        }
+        <div class="row">
 
-        $p = $request->post();
-        $username = $p['username'];
-        $userpass = $p['userpass'];
-        //验证
-        $data = Db::name('user')->where('username',$username)->find();
+            <div class="col-md-12">
+                <div class="widget"  >
+                    <div class="widget-header transparent" style="margin-bottom:30px;">
 
-        if(empty($data))
-        {
-            return $this->error('用户名不存在', url('admin/publics/login'));
-            exit;
 
-        }
+                    </div>
+                    <div class="widget-content">
+                        <div >
+                            <form class="form-horizontal" action="{:url('admin/role/update',['id'=>$data['id']])}" method="post">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">角色名</label>
+                                    <div class="col-sm-5">
+                                        <input type="input" class="form-control" id="username" name="name" value="{$data.name}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">说明</label>
+                                    <div class="col-sm-5">
+                                        <input type="input" class="form-control" id="name" name="remark" value="{$data.remark}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="checkbox">
+                                            <!--<label>-->
+                                                <!--<input type="radio" name="status" value="1" {if condition="$data.status eq '1'"}checked{/if} >启用-->
+                                                <!--&nbsp;&nbsp;&nbsp;-->
+                                                <!--<input type="radio" name="status" value="0" {if condition="$data.status eq '0'"}checked{/if}>禁用-->
+                                            <!--</label>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom:60px;">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-success">修改</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
 
-        if($data['userpass'] != md5($userpass))
-        {
-            return $this->error('密码不正确', url('admin/publics/login'));
-            exit;
-        }
+</script>
 
-        //保存在session 中
-        Session::set('userData',$data);
 
-        $list = Db::name('node')->field('mname,aname')
-            ->where('id in'.Db::name('role_node')->field('nid')
-                    ->where("rid in ".Db::name('user_role')->field('rid')
-                    ->where(array('uid'=>array('eq',$data['id'])))
-                    ->buildSql())
-                    ->buildSql())
-                    ->select();
-
-        foreach ($list as $key => $val) {
-            $list[$key]['mname'] = ucfirst($val['mname']);
-        }
-
-        $nodelist = array();
-        $nodelist['Index'] = array('index');
-        // var_dump($nodelist);die;
-        // var_dump($list);
-        // die;var_dump($nodelist);
-        // var_dump($list);
-        // die;
-
-        foreach ($list as $v)
-        {
-            $nodelist[$v['mname']][] = $v['aname'];
-
-            if($v['aname']=="edit"){
-                $nodelist[$v['mname']][]="update";
-            }
-            if($v['aname']=="add"){
-                $nodelist[$v['mname']][]="save";
-            }
-        }
-
-        Session::set('userData.nodelist',$nodelist);
-        // var_dump(Session::get('userData'));
-        // die;
-
-        // return $this->success('登录成功', url('admin/Main/Index'));
-
-        $this->redirect('Index/index');
-    }
-
-    /**
-     * 登出系统
-     */
-    public function logout()
-    {
-        Session::delete('userData');
-        return view('Publics/login');
-    }
-
-    /**
-     * 后台主页
-     * @return \think\response\View
-     */
-    public function index()
-    {
-        return view('admin@Index/Index');
-    }
-
-}
+{/block}

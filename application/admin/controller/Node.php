@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 
+
 use think\Request;
 use think\Db;
 
@@ -80,16 +81,30 @@ class Node extends AdminController
             'mname' => $p['mname'],
             'aname' => $p['aname']
             // 'status' => $p['status']
-
         ];
-        $result = Db::name('node')->where('id',$id)->update($data);
-        if ($result) {
-            return $this->success('修改成功', url('admin/node/Index'));
+        $result = Db::name('node')->where('id' , $id)->update($data);
+        if ($result > 0)
+        {
+            return $this->success('修改成功(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 起飞！', url('admin/node/index'));
         }else{
-            return $this->error('修改失败', url('admin/node/add'));
-
+            return $this->error('修改失败(o＞ω＜o)雅蠛蝶');
         }
+    }
 
-
+    /**
+     * 删除指定资源
+     *
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function del($id)
+    {
+        $result = Db::name('node')->delete($id);
+        if ($result > 0)
+        {
+            return $this->success('删除成功',url('admin/node/index'));
+        }else{
+            return $this->error('删除失败',url('admin/node/index'));
+        }
     }
 }
