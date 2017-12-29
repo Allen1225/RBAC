@@ -9,6 +9,16 @@ use think\Session;
 
 class AdminController extends Controller
 {
+    /**空方法
+     * @param Request $request
+     * @return string
+     */
+    public function _empty(Request $request)
+    {
+        $a = $request->action();
+        return ' 您当前访问的页面不存在';
+    }
+
 
     public function _initialize()
     {

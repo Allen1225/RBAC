@@ -79,26 +79,47 @@ class User extends AdminController
 
     public function delete($id)
     {
-        // var_dump($id);die;
         $uid = Db::name('user_role')->where('uid','=',$id)->select();
-        // var_dump($uid);die;
+
         foreach($uid as $v)
         {
             $uids = $v['uid'];
         }
+
         if(!(empty($uids))){
             Db::name('user_role')->where('uid','=',$uids)->delete();
+
+            $result = Db::name('user')->delete($id);
+
+            if ($result > 0) {
+                $info['status'] = true;
+                $info['id'] = $id;
+                $info['info'] = 'ID为: ' . $id . '的用户删除成功!';
+            } else {
+                $info['status'] = false;
+                $info['id'] = $id;
+                $info['info'] = 'ID为: ' . $id . '的用户删除失败,请重试!';
+            }
+            return json($info);
+
         }else{
             $result = Db::name('user')->delete($id);
 
-            if ($result>0) {
-                return $this->success('删除成功', url('admin/user/Index'));
-            }else{
-                return $this->error('删除失败', url('admin/user/Index'));
-
+            if ($result > 0) {
+                $info['status'] = true;
+                $info['id'] = $id;
+                $info['info'] = 'ID为: ' . $id . '的用户删除成功!';
+            } else {
+                $info['status'] = false;
+                $info['id'] = $id;
+                $info['info'] = 'ID为: ' . $id . '的用户删除失败,请重试!';
             }
+            return json($info);
         }
+
     }
+
+
     public function edit ($id)
     {
         $data = Db::name('user')->find($id);
