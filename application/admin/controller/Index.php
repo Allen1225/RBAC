@@ -19,13 +19,4 @@ class Index extends AdminController
             return view('Index/index');
         }
     }
-
-    /**
-     * 后台登录页面
-     * @return \think\response\View
-     */
-    // public function index()
-    // {
-    //     return view('admin@index/login');
-    // }
 }
