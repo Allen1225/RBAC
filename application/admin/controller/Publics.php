@@ -56,11 +56,16 @@ class Publics extends Controller
 
         if($data['userpass'] != md5($userpass))
         {
+<<<<<<< HEAD
             return '<script>alert("密码不正确");window.history.back(-1); </script>';
+=======
+            return '<script>alert("验证码不正确");window.history.back(-1); </script>';
+>>>>>>> 16d829b7e975db9ee9410c9ea5341261f00606ce
         }
 
         //保存在session 中
         Session::set('userData',$data);
+<<<<<<< HEAD
         //子查询
         // $list = Db::name('node')->field('mname,aname')
         //     ->where('id in'.Db::name('role_node')->field('nid')
@@ -88,6 +93,17 @@ class Publics extends Controller
 			// 			                    where ur.uid = any(select u.id
         //                                                     from lamp_user as u
 			// 				                                    where u.username = 'admin')));
+=======
+
+        $list = Db::name('node')->field('mname,aname')
+            ->where('id in'.Db::name('role_node')->field('nid')
+                    ->where("rid in ".Db::name('user_role')->field('rid')
+                    ->where(array('uid'=>array('eq',$data['id'])))
+                    ->buildSql())
+                    ->buildSql())
+                    ->select();
+
+>>>>>>> 16d829b7e975db9ee9410c9ea5341261f00606ce
         foreach ($list as $key => $val) {
             $list[$key]['mname'] = ucfirst($val['mname']);
         }
@@ -111,7 +127,11 @@ class Publics extends Controller
                 $nodelist[$v['mname']][]="save";
             }
         }
+<<<<<<< HEAD
         // var_dump($nodelist);die;
+=======
+
+>>>>>>> 16d829b7e975db9ee9410c9ea5341261f00606ce
         Session::set('userData.nodelist',$nodelist);
         // var_dump(Session::get('userData'));
         // die;

@@ -105,10 +105,17 @@ class User extends AdminController
                 $info['info'] = 'ID为: ' . $id . '的用户删除失败,请重试!';
             }
             return json($info);
+<<<<<<< HEAD
 
         }else{
             $result = Db::name('user')->delete($id);
 
+=======
+
+        }else{
+            $result = Db::name('user')->delete($id);
+
+>>>>>>> 16d829b7e975db9ee9410c9ea5341261f00606ce
             if ($result > 0) {
                 $info['status'] = true;
                 $info['id'] = $id;

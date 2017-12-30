@@ -17,10 +17,16 @@ Route::get('/', 'index/Index/index');
 
 // Route::get('/user/delete/:id','admin/user/delete');
 // Route::get('/user/del','admin/user/del');
+<<<<<<< HEAD
 // Route::resource('users', 'admin/User');
 // Route::resource('roles', 'admin/Role');
 // Route::resource('Nodes', 'admin/Node');
 // Route::get('users/read/:id', 'rest/User/readpage');
+=======
+// Route::resource('user', 'admin/User');
+// Route::get('users/read/:id', 'rest/User/readpage');
+
+>>>>>>> 16d829b7e975db9ee9410c9ea5341261f00606ce
 
 return [
 
