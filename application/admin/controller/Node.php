@@ -55,11 +55,17 @@ class Node extends AdminController
         $result = Db::name('node')->delete($id);
 
         if ($result>0) {
-            return $this->success('删除成功', url('admin/node/Index'));
+            $info['status'] = true;
+            $info['id'] = $id;
+            $info['info'] = 'ID为: ' . $id . '的节点删除成功!';
         }else{
-            return $this->error('删除失败', url('admin/node/Index'));
-
+            $info['status'] = false;
+            $info['id'] = $id;
+            $info['info'] = 'ID为: ' . $id . '的节点删除失败,请重试!';
         }
+
+        return json($info);
+
     }
     public function edit ($id)
     {
@@ -85,9 +91,9 @@ class Node extends AdminController
         $result = Db::name('node')->where('id' , $id)->update($data);
         if ($result > 0)
         {
-            return $this->success('修改成功(((((((((((っ･ω･)っ Σ(σ｀･ω･´)σ 起飞！', url('admin/node/index'));
+            return $this->success('修改成功', url('admin/node/index'));
         }else{
-            return $this->error('修改失败(o＞ω＜o)雅蠛蝶');
+            return $this->error('修改失败');
         }
     }
 

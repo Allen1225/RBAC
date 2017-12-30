@@ -1,64 +1,140 @@
-{extend name="index/index" /}
-{block name="main"}
+<?php
 
-<div class="content-page">
+namespace app\admin\controller;
 
-    <div class="content">
+use think\Controller;
+use think\Request;
+use think\Db;
+use think\Session;
+use think\Controller\redirect;
 
-        <div class="page-heading">
-            <h1><i class='fa fa-table'></i>角色管理</h1>
-            <h3>角色修改</h3></div>
+class Publics extends Controller
+{
+    /**空方法
+     * @param Request $request
+     * @return string
+     */
+    public function _empty(Request $request)
+    {
+        $a = $request->action();
+        return ' 您当前访问的页面不存在';
+    }
 
-        <div class="row">
+    /**
+     * 显示资源列表
+     *
+     * @return \think\Response
+     */
+    public function login()
+    {
 
-            <div class="col-md-12">
-                <div class="widget"  >
-                    <div class="widget-header transparent" style="margin-bottom:30px;">
+        return view('publics/login');
+    }
+    //执行登录
+    public function dologin(Request $request)
+    {
+        $data = $request->post();
 
+        if(!captcha_check($data['yzm'])){
+            // echo '123';die;
+            // return  $this->error('验证码不正确',url('admin/publics/login'));
+            return '<script>alert("验证码不正确");window.history.back(-1); </script>';
+        }
 
-                    </div>
-                    <div class="widget-content">
-                        <div >
-                            <form class="form-horizontal" action="{:url('admin/role/update',['id'=>$data['id']])}" method="post">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">角色名</label>
-                                    <div class="col-sm-5">
-                                        <input type="input" class="form-control" id="username" name="name" value="{$data.name}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">说明</label>
-                                    <div class="col-sm-5">
-                                        <input type="input" class="form-control" id="name" name="remark" value="{$data.remark}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <div class="checkbox">
-                                            <!--<label>-->
-                                                <!--<input type="radio" name="status" value="1" {if condition="$data.status eq '1'"}checked{/if} >启用-->
-                                                <!--&nbsp;&nbsp;&nbsp;-->
-                                                <!--<input type="radio" name="status" value="0" {if condition="$data.status eq '0'"}checked{/if}>禁用-->
-                                            <!--</label>-->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group" style="margin-bottom:60px;">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-success">修改</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
+        $p = $request->post();
+        $username = $p['username'];
+        $userpass = $p['userpass'];
+        //验证
+        $data = Db::name('user')->where('username',$username)->find();
 
-</script>
+        if(empty($data))
+        {
+            return '<script>alert("用户不存在");window.history.back(-1); </script>';
 
 
-{/block}
+        }
+
+        if($data['userpass'] != md5($userpass))
+        {
+            return '<script>alert("密码不正确");window.history.back(-1); </script>';
+        }
+
+        //保存在session 中
+        Session::set('userData',$data);
+        //子查询
+        // $list = Db::name('node')->field('mname,aname')
+        //     ->where('id in'.Db::name('role_node')->field('nid')
+        //             ->where("rid in ".Db::name('user_role')->field('rid')
+        //             ->where(array('uid'=>array('eq',$data['id'])))
+        //             ->buildSql())
+        //             ->buildSql())
+        //             ->select();
+        //视图查询 存在重复的权限,不影响
+        $list = Db::view('node','mname,aname')
+            ->view('role_node','rid','node.id=role_node.nid')
+            ->view('user_role','uid','user_role.rid=role_node.rid ')
+            ->view('user','id','user_role.uid=user.id')
+            ->where('username','=',$data['id'])
+            ->select();
+
+        // var_dump($list);die;
+        //原生SQL
+        // select n.mname,n.aname
+        // from lamp_node as n
+        // where n.id=any(select rn.nid
+        //                 from lamp_role_node as rn
+			// 		        where rn.rid=any(select ur.rid
+			// 			                    from lamp_user_role as ur
+			// 			                    where ur.uid = any(select u.id
+        //                                                     from lamp_user as u
+			// 				                                    where u.username = 'admin')));
+        foreach ($list as $key => $val) {
+            $list[$key]['mname'] = ucfirst($val['mname']);
+        }
+
+        $nodelist = array();
+        $nodelist['Index'] = array('index');
+        // var_dump($nodelist);die;
+        // var_dump($list);
+        // die;var_dump($nodelist);
+        // var_dump($list);
+        // die;
+
+        foreach ($list as $v)
+        {
+            $nodelist[$v['mname']][] = $v['aname'];
+
+            if($v['aname']=="edit"){
+                $nodelist[$v['mname']][]="update";
+            }
+            if($v['aname']=="add"){
+                $nodelist[$v['mname']][]="save";
+            }
+        }
+        // var_dump($nodelist);die;
+        Session::set('userData.nodelist',$nodelist);
+        // var_dump(Session::get('userData'));
+        // die;
+
+        $this->redirect('Index/index');
+    }
+
+    /**
+     * 登出系统
+     */
+    public function logout()
+    {
+        Session::delete('userData');
+        return view('Publics/login');
+    }
+
+    /**
+     * 后台主页
+     * @return \think\response\View
+     */
+    public function index()
+    {
+        return view('admin@Index/Index');
+    }
+
+}
