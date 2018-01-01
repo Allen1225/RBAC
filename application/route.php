@@ -15,12 +15,7 @@ use think\Route;
 
 Route::get('/', 'index/Index/index');
 
-// Route::get('/user/delete/:id','admin/user/delete');
-// Route::get('/user/del','admin/user/del');
-// Route::resource('users', 'admin/User');
-// Route::resource('roles', 'admin/Role');
-// Route::resource('Nodes', 'admin/Node');
-// Route::get('users/read/:id', 'rest/User/readpage');
+
 
 return [
 

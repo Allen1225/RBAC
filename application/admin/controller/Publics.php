@@ -83,11 +83,11 @@ class Publics extends Controller
         // from lamp_node as n
         // where n.id=any(select rn.nid
         //                 from lamp_role_node as rn
-			// 		        where rn.rid=any(select ur.rid
-			// 			                    from lamp_user_role as ur
-			// 			                    where ur.uid = any(select u.id
+            //              where rn.rid=any(select ur.rid
+            //                              from lamp_user_role as ur
+            //                              where ur.uid = any(select u.id
         //                                                     from lamp_user as u
-			// 				                                    where u.username = 'admin')));
+            //                                                  where u.username = 'admin')));
         foreach ($list as $key => $val) {
             $list[$key]['mname'] = ucfirst($val['mname']);
         }
