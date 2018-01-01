@@ -8,8 +8,8 @@
     <div class="content">
 
         <div class="page-heading">
-            <h1><i class='fa fa-table'></i>角色管理</h1>
-            <h3>角色列表</h3></div>
+            <h1><i class='fa fa-table'></i>节点管理</h1>
+            <h3>节点列表</h3></div>
 
         <div class="row">
 
@@ -24,13 +24,13 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
 
-                                    <form action="{:url('admin/role/search')}" method="post">
+                                    <form action="{:url('admin/node/search')}" method="post">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">搜索角色</h4>
+                                            <h4 class="modal-title" id="myModalLabel">搜索节点</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <span style="color: black;">角色名:<input type="text" name="search" placeholder="search..."></span>
+                                            <span style="color: black;">节点名:<input type="text" name="search" placeholder="search..."></span>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
@@ -48,46 +48,44 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>角色列表</th>
-                                    <th>说明</th>
+                                    <th>节点名称</th>
+                                    <th>模块名（控制器）</th>
+                                    <th>方法名</th>
                                     <!--<th>状态</th>-->
-                                    <th>拥有权限</th>
                                     <th>操作</th>
                                     {volist name='list' id='v'}
-                                    <tr>
-                                        <td>{$v.id}</td>
-                                        <td>{$v.name}</td>
-                                        <td>{$v.remark}</td>
-                                        <!--<td>{$v.status}</td>-->
-                                        <td>
-                                            {volist name="v.role" id="val"}
-                                            <span>{$val}</span>
-                                            &nbsp;
-                                            {if condition="$i%2 == 0 "}<br>{/if}
-                                            {/volist}
-                                        </td>
-                                        <td>
-                                            <a href="{:url('admin/role/edit',['id'=>$v['id']])}" class="btn btn-warning">修改</a>
-
-                                            <button class="btn btn-danger del-btn" data-id="{$v.id}">删除</button>
-                                            <a href="{:url('admin/role/nodelist',['id'=>$v['id']])}" class="btn btn-success">分配权限</a>
-                                        </td>
-                                    </tr>
-                                    {/volist}
+                                <tr>
+                                    <td>{$v.id}</td>
+                                    <td>{$v.name}</td>
+                                    <td>{$v.mname}</td>
+                                    <td>{$v.aname}</td>
+                                    <!--<td>{$v.status}</td>-->
+                                    <td>
+                                        <a href="{:url('admin/node/edit', ['id'=>$v['id']])}" class="btn btn-warning">修改</a>
+                                        <!--<a href="{:url('admin/node/delete', ['id'=>$v['id']])}" class="btn btn-danger">删除</a>-->
+                                        <button class="btn btn-danger del-btn" data-id="{$v.id}">删除</button>
+                                    </td>
+                                </tr>
+                                {/volist}
 
                                 </tr>
                                 </thead>
 
                                 <tbody>
 
+
                                 </tbody>
                             </table>
-                            {$data->render()}
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
         <!-- Footer Start -->
         <footer>
             Huban Creative &copy; 2014
@@ -114,7 +112,7 @@
         $('.del-btn').click(function () {
             var ac_id = $(this).attr('data-id');
             //                 console.log('删除操作,ID为: ' + ac_id);
-            if (confirm('您确定要 [ 删 除 ] 该角色吗?')) {
+            if (confirm('您确定要 [ 删 除 ] 该节点吗?')) {
                 var obj = $(this).parents('tr');
 
                 delAjax(ac_id, obj); // 执行AJAX删除
@@ -136,7 +134,7 @@
     function delAjax(id, obj) {
         $.ajax({
             type: 'delete',
-            url: '/admin/role/delete/id/' + id + '.html',
+            url: '/admin/node/delete/id/' + id + '.html',
             dataType : 'json',
             success : function (data){
                 if (data.status) {
@@ -153,6 +151,5 @@
     }
 
 </script>
-
 
 {/block}

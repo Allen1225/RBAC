@@ -1,6 +1,8 @@
 {extend name="index/index" /}
 {block name="main"}
 
+{css href="/static/index/reset.css"}
+
 <div class="content-page">
 
     <div class="content">
@@ -14,13 +16,32 @@
             <div class="col-md-12">
                 <div class="widget">
                     <div class="widget-header transparent">
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">搜索
+                        </button>
 
-                        <!--<div class="additional-btn">-->
-                            <!--<a href="#" class="hidden reload"><i class="icon-ccw-1"></i></a>-->
-                            <!--<a href="#" class="widget-toggle"><i class="icon-down-open-2"></i></a>-->
-                            <!--<a href="#" class="widget-close"><i class="icon-cancel-3"></i></a>-->
-                        <!--</div>-->
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+
+                                    <form action="{:url('admin/node/search')}" method="post">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">搜索节点</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <span style="color: black;">节点名:<input type="text" name="search" placeholder="search..."></span>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                            <button type="submit" class="btn btn-success">确定</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <hr>
                     <div class="widget-content">
                         <div class="table-responsive">
                             <table data-sortable class="table">
@@ -30,18 +51,19 @@
                                     <th>节点名称</th>
                                     <th>模块名（控制器）</th>
                                     <th>方法名</th>
-                                    <th>状态</th>
+                                    <!--<th>状态</th>-->
                                     <th>操作</th>
-                                    {volist name='list' key='key' id='v'}
+                                    {volist name='list' id='v'}
                                     <tr>
                                     <td>{$v.id}</td>
                                     <td>{$v.name}</td>
-                                    <td>{$v.name}</td>
                                     <td>{$v.mname}</td>
-                                    <td>{$v.status}</td>
+                                    <td>{$v.aname}</td>
+                                    <!--<td>{$v.status}</td>-->
                                     <td>
                                         <a href="{:url('admin/node/edit', ['id'=>$v['id']])}" class="btn btn-warning">修改</a>
-                                        <a href="{:url('admin/node/delete', ['id'=>$v['id']])}" class="btn btn-danger">删除</a>
+                                        <!--<a href="{:url('admin/node/delete', ['id'=>$v['id']])}" class="btn btn-danger">删除</a>-->
+                                        <button class="btn btn-danger del-btn" data-id="{$v.id}">删除</button>
                                     </td>
                                     </tr>
                                     {/volist}
@@ -54,6 +76,7 @@
 
                                 </tbody>
                             </table>
+                            {$list->render()}
                         </div>
                     </div>
                 </div>
@@ -79,6 +102,54 @@
 
 </div>
 
+{js href="/static/index/js/jquery.min.js"}
 
+{js href="/static/index/js/toastr.min.js"}
+
+<script>
+    $(function () {
+        // 触发删除用户
+        $('.del-btn').click(function () {
+            var ac_id = $(this).attr('data-id');
+            //                 console.log('删除操作,ID为: ' + ac_id);
+            if (confirm('您确定要 [ 删 除 ] 该节点吗?')) {
+                var obj = $(this).parents('tr');
+
+                delAjax(ac_id, obj); // 执行AJAX删除
+
+            }
+        });
+    });
+
+    toastr.options = {
+        closeButton: true,// 是否显示关闭按钮
+        progressBar: true,// 实现显示计时条
+        timeOut: "3000",// 自动关闭时间
+        positionClass: "toast-bottom-left"// 提示位置
+        // positionClass: "toast-top-full-width"// 提示位置
+        // toast-top-full-width 顶端，宽度铺满整个屏幕
+        // toast-top-right  顶端右边
+    };
+
+    function delAjax(id, obj) {
+        $.ajax({
+            type: 'delete',
+            url: '/admin/node/delete/id/' + id + '.html',
+            dataType : 'json',
+            success : function (data){
+                if (data.status) {
+                    toastr.success(data.info);
+                    obj.remove();
+                } else {
+                    toastr.error(data.info);
+                }
+            },
+            error : function () {
+                alert('AJAX执行失败!');
+            }
+        });
+    }
+
+</script>
 
 {/block}
